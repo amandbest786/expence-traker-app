@@ -1,4 +1,4 @@
-// ✅ 1. ALWAYS AT VERY TOP
+
 const token = localStorage.getItem("token");
 
 if(!token){
@@ -6,9 +6,7 @@ if(!token){
     window.location.href = "login.html";
 }
 
-// ✅ 2. THEN ALL YOUR FUNCTIONS BELOW
-
-function expence(event) {
+function addExpense(event) {
     event.preventDefault();
 
     const detail = {
@@ -17,17 +15,18 @@ function expence(event) {
         category: event.target.category.value
     };
 
-    axios.post('http://localhost:3000/expense/add-expense', detail, {
-        headers: { "Authorization": token }
-    })
-    .then(res => {
-        if(res.status === 201){
-            alert('Expense added successfully');
-            showExpenseOnScreen(res.data.expense);
-            event.target.reset();
+   axios.post('http://localhost:3000/expense/add-expense', detail, {
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
     })
-    .catch(err => console.log(err));
+    .then(res => {
+            showExpenseOnScreen(res.data.expense);
+            event.target.reset();
+    })
+    .catch(err => {
+    console.log("ERROR:", err.response || err);
+})
 }
 
 function showExpenseOnScreen(expense){
@@ -46,7 +45,9 @@ function showExpenseOnScreen(expense){
 
 function deleteExpense(id){
     axios.delete(`http://localhost:3000/expense/delete-expense/${id}`, {
-        headers: { "Authorization": token }
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     })
     .then(() => {
         document.getElementById(id).remove();
@@ -54,8 +55,11 @@ function deleteExpense(id){
 }
 
 window.onload = function(){
+    
     axios.get('http://localhost:3000/expense/get-expense', {
-        headers: { "Authorization": token }
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     })
     .then(res => {
         res.data.expenses.forEach(showExpenseOnScreen);

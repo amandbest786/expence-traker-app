@@ -1,20 +1,22 @@
-function login(event){
+
+
+async function login(event){
     event.preventDefault();
 
     const detail = {
         email: event.target.email.value,
         password: event.target.password.value
-    }
+    };
 
     axios.post('http://localhost:3000/user/login', detail)
     .then(res => {
-        alert(res.data.message); // shows message
-
-            localStorage.setItem("token", res.data.token);
-
-            window.location.href = "expence.html";
+        if(res.status === 200){
+           window.location.href = "expense.html";
+            localStorage.setItem('token', res.data.token);
+        }
     })
     .catch(err => {
-        alert(err.response.data.message); //  error message
-    })
+        alert(err.response.data.message);
+    });
+
 }

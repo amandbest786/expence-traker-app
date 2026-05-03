@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expence page</title>
+    <title>Expense page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form onsubmit="expence(event)">
+    <form onsubmit="addExpense(event)">
        Choose an amount: <input type="number" name="amount" placeholder="Amount" required>
        Choose a description: <input type="text" name="description" placeholder="Description" required>
         Choose a category: 
@@ -18,13 +19,13 @@
             <option value="Utilities">Utilities</option>
             <option value="Other">Other</option>
         </select>
-        <button type="submit">Add Expence</button>
+        <button type="submit">Add Expense</button>
     </form>
 
     <ul id="expenseList"></ul>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" ></script>
-    <script src="expence.js"></script>
+    <script src="./expense.js"></script>
 
 </body>
 </html>
